@@ -67,8 +67,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'fisadev/FixedTaskList.vim'
 " Async autocompletion
 Plug 'Shougo/deoplete.nvim', {'do': 'UpdateRemotePlugins'}
-" Plug 'roxma/nvim-yarp'
-" Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 " Python autocompletion
 Plug 'deoplete-plugins/deoplete-jedi'
 " js autocompletion
@@ -150,6 +150,12 @@ Plug 'alvan/vim-closetag'
 " For managing your wikis
 Plug 'vimwiki/vimwiki'
 
+" For auto-formatting your code
+Plug 'sbdchd/neoformat'
+
+" Code folding
+Plug 'tmhedberg/SimpylFold'
+
 
 " Code searcher. If you enable it, you should also configure g:hound_base_url 
 " and g:hound_port, pointing to your hound instance
@@ -169,6 +175,8 @@ endif
 
 " ============================================================================
 " Vim settings and mappings
+
+let mapleader = '-'
 
 " open new split panes to right and below
 set splitright
@@ -205,8 +213,8 @@ set fillchars+=vert:\
 
 " use 256 colors when possible
 " colorscheme vim-monokai-tasty
-"colorscheme gruvbox
-colorscheme snazzy
+colorscheme gruvbox
+"colorscheme snazzy
 
 " save as sudo
 ca w!! w !sudo tee "%"
@@ -312,6 +320,9 @@ let g:neomake_python_python_maker = neomake#makers#ft#python#python()
 let g:neomake_python_flake8_maker = neomake#makers#ft#python#flake8()
 let g:neomake_python_python_maker.exe = 'python3 -m py_compile'
 let g:neomake_python_flake8_maker.exe = 'python3 -m flake8'
+
+" let g:neomake_python_enabled_makers = ['pylint']
+call neomake#configure#automake('nrwi', 500)
 
 " Disable error messages inside the buffer, next to the problematic line
 let g:neomake_virtualtext_current_error = 0
@@ -568,3 +579,25 @@ let g:closetag_close_shortcut = '<leader>>'
 set nocompatible
 filetype plugin on
 syntax on
+
+" disable python 2
+let g:loaded_python_provider = 0
+let g:python3_host_prog = '/home/echo/.envs/py3nvim/bin/python'
+
+" Neoformat
+
+" autoformat on save
+augroup fmt
+  autocmd!
+  autocmd BufWritePre * undojoin | Neoformat
+augroup END
+
+" enable basic formatting when file type isnt found
+" Enable alignment
+let g:neoformat_basic_format_align = 1
+
+" Enable tab to spaces conversion
+let g:neoformat_basic_format_retab = 1
+
+" Enable trimmming of trailing whitespace
+let g:neoformat_basic_format_trim = 1
