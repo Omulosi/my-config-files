@@ -220,15 +220,12 @@ source $ZSH/oh-my-zsh.sh
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-# Set Spaceship as prompt
-autoload -U promptinit; promptinit
-prompt spaceship
-SPACESHIP_PACKAGE_SHOW=false
-SPACESHIP_NODE_SHOW=false
-#SPACESHIP_GIT_STATUS_STASHED=''eval "$(rbenv init -)"
-
 
 source $(dirname $(gem which colorls))/tab_complete.sh
 
 alias weather="curl wttr.in"
 fpath=($fpath "/home/jp/.zfunctions")
+
+# Initialize spaceship
+# autoload -U promptinit; promptinit
+# prompt spaceship
